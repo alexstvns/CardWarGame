@@ -34,9 +34,16 @@ public class Lab5 extends Application {
      Label lblCardDeck = new Label();
      Label lblCardRight = new Label();
      
+     String rightBuild;
+     String leftBuild;
+     String resetImg;
+     
      int rightVal=0;
      int leftVal=0;
      int Score=0;
+     
+     int rightScore;
+     int leftScore;
      boolean rightsTurn = true;
      
      TextField tfRight = new TextField();
@@ -73,11 +80,12 @@ public class Lab5 extends Application {
                 if(rightsTurn == true)
                 {
                     rightVal = rand.nextInt((152-101)+1)+101;
-                    String rightBuild = ("file:img\\"+rightVal+".gif");
+                    rightBuild = ("file:img/"+rightVal+".gif");
                     
                     Card rCard = new Card();
                     rCard.setImage(rightBuild);
                     lblCardRight.setGraphic(rCard.getCard());
+                    rightScore = rCard.getValue();
                   //  Image rCard = new Image(rightBuild);
                   //  lblCardRight.setGraphic(new ImageView(rCard));
                    
@@ -89,26 +97,27 @@ public class Lab5 extends Application {
                 else
                 {
                 leftVal = rand.nextInt((152-101)+1)+101;
-                String leftBuild=("file:img\\"+leftVal+".gif");
+                leftBuild=("file:img/"+leftVal+".gif");
                 
                 Card lCard = new Card();
                 lCard.setImage(leftBuild);
+                leftScore = lCard.getValue();
                 lblCardLeft.setGraphic(lCard.getCard());
                 //Image lCard = new Image(leftBuild);
                 //lblCardLeft.setGraphic(new ImageView(lCard));
                 }
                 
-                if(rightVal > leftVal)
+                if(rightScore > leftScore)
                 {
                    Score = Integer.parseInt(tfRight.getText());
-                   Score+=1;
+                   Score+=rightScore;
                    tfRight.setText(""+Score);
                 }
                 
-                else if(leftVal > rightVal)
+                else if(leftScore > rightScore)
                 {
                     Score = Integer.parseInt(tfLeft.getText());
-                    Score+=1;
+                    Score+= leftScore;
                     tfLeft.setText(""+Score);
                     
                 }
@@ -176,12 +185,12 @@ public class Lab5 extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-    }
+    } 
  
     
     public void resetCardImages()
     {
-        String resetImg = "file:img\\155.gif";
+         resetImg = "file:img/155.gif";
         
         Card cR = new Card();
         Card cL = new Card();
