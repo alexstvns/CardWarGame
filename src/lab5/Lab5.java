@@ -30,20 +30,19 @@ import static javafx.application.Application.launch;
         
 public class Lab5 extends Application {
     
-     Label lblCardLeft = new Label();
-     Label lblCardDeck = new Label();
-     Label lblCardRight = new Label();
+    private Label lblCardLeft = new Label();
+     private Label lblCardDeck = new Label();
+     private Label lblCardRight = new Label();
      
-     String rightBuild;
-     String leftBuild;
-     String resetImg;
+    // String rightBuild;
+   //  String leftBuild;
+     //String resetImg;
      
-     int rightVal=0;
-     int leftVal=0;
-     int Score=0;
+    private int rightVal=0;
+     private int leftVal=0;
+     private int Score=0;
      
-     int rightScore;
-     int leftScore;
+   
      boolean rightsTurn = true;
      
      TextField tfRight = new TextField();
@@ -77,15 +76,14 @@ public class Lab5 extends Application {
             public void handle(MouseEvent event) {
                 Random rand = new Random();
                 
+                    int pathVal = rand.nextInt((152-101)+1)+101;
+                    String Builder = ("file:img\\"+pathVal+".gif");
                 if(rightsTurn == true)
                 {
-                    rightVal = rand.nextInt((152-101)+1)+101;
-                    rightBuild = ("file:img/"+rightVal+".gif");
-                    
-                    Card rCard = new Card();
-                    rCard.setImage(rightBuild);
+                    Card rCard = new Card(Builder);
+                    rightVal = rCard.getValue();
+
                     lblCardRight.setGraphic(rCard.getCard());
-                    rightScore = rCard.getValue();
                   //  Image rCard = new Image(rightBuild);
                   //  lblCardRight.setGraphic(new ImageView(rCard));
                    
@@ -96,28 +94,26 @@ public class Lab5 extends Application {
 
                 else
                 {
-                leftVal = rand.nextInt((152-101)+1)+101;
-                leftBuild=("file:img/"+leftVal+".gif");
+                    
                 
-                Card lCard = new Card();
-                lCard.setImage(leftBuild);
-                leftScore = lCard.getValue();
+                Card lCard = new Card(Builder);
+                leftVal = lCard.getValue();
                 lblCardLeft.setGraphic(lCard.getCard());
                 //Image lCard = new Image(leftBuild);
                 //lblCardLeft.setGraphic(new ImageView(lCard));
                 }
                 
-                if(rightScore > leftScore)
+                if(rightVal > leftVal)
                 {
                    Score = Integer.parseInt(tfRight.getText());
-                   Score+=rightScore;
+                   Score+=rightVal;
                    tfRight.setText(""+Score);
                 }
                 
-                else if(leftScore > rightScore)
+                else if(leftVal > rightVal)
                 {
                     Score = Integer.parseInt(tfLeft.getText());
-                    Score+= leftScore;
+                    Score+= leftVal;
                     tfLeft.setText(""+Score);
                     
                 }
@@ -169,9 +165,7 @@ public class Lab5 extends Application {
          cardPane.add(lblCardRight,2,0);
         
          
-         //Call the resetImages method to show cardbacks
-         resetCardImages();
- 
+         this.resetCardImages();
         //Root Objects 
        BorderPane root = new BorderPane();
 
@@ -188,17 +182,16 @@ public class Lab5 extends Application {
     } 
  
     
-    public void resetCardImages()
+    private void resetCardImages()
     {
-         resetImg = "file:img/155.gif";
         
-        Card cR = new Card();
-        Card cL = new Card();
-        Card cD =new Card();
+        Card cR = new Card("file:img\\155.gif");
+        Card cL = new Card("file:img\\155.gif");
+        Card cD =new Card("file:img\\155.gif");
         
-        cR.setImage(resetImg);
-        cL.setImage(resetImg);
-        cD.setImage(resetImg);
+       // cR.setImage(resetImg);
+        //cL.setImage(resetImg);
+        //cD.setImage(resetImg);
         
         lblCardLeft.setGraphic(cL.getCard());
         lblCardRight.setGraphic(cR.getCard());

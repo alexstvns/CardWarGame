@@ -24,14 +24,25 @@ private int cardValue;
 private String namehold;
 private Suit suit;
 
+
+public Card()
+{
+    this("file:img\\155.gif");
+}
+public Card(String Dir)
+{
+    this.setImage(Dir);
+}
+
+    
 private boolean loadCard(String Dir)
 {
-    this.cardImg = new Image(Dir);
+    cardImg = new Image(Dir);
     
-    ImageView newIm = new ImageView(this.cardImg);
-    holdimage.setGraphic(newIm);
+    //ImageView newIm = new ImageView(this.cardImg);
+    holdimage.setGraphic(new ImageView(cardImg));
     
-    getCardValue(Dir);
+
     
     return true;
 }
@@ -39,7 +50,9 @@ public void setImage(String Dir)
 {
     
    this.namehold = Dir;
-   loadCard(Dir);
+       this.getCardValue(Dir);
+       this.getCardValue(Dir);
+   this.loadCard(Dir);
     
 }
 public Label getCard()
@@ -48,81 +61,50 @@ public Label getCard()
 }
 private void getCardValue(String Dir)
 {
-    //9,10,11\
+  int index=0;
 
-    String rep = Dir.replaceAll("[a-zA-Z:./:]","");
-    int valu = Integer.parseInt(rep);
-    
-// find out the suit of the card
-  if(valu>=101&&valu<=113)
-  {
-   this.suit = Suit.Diamonds;  
-   
-  }
-  else if(valu>=114&&valu<=126)
-  {
-      this.suit = Suit.Clubs;
-  }
-  
-  else if(valu >= 127&& valu<=139)
-  {
-      this.suit = Suit.Hearts;
-  }
-  else if(valu>=140&&valu<=152)
-  {
-    this.suit = Suit.Spades;
-  }
-  
-  // find out the value of the card
-  int Algo = valu%13;
-  // the number modulus 13 = the same number for each card face. ace is always 10 etc..
-  switch(Algo)
-  {
-      case 0:
-          this.cardValue = 4;
-          break;
-      case 1:
-           this.cardValue = 5;
-           break;
-      
-      case 2:
-           this.cardValue = 6;
-           break;
-      
-      case 3:
-          this.cardValue = 7;
-          break;
-       
-      case 4:
-          this.cardValue = 8;
-          break;
-      
-      case 5:
-          this.cardValue = 9;
-          break;
-     
-     // case 6 thru 9 is 10,jack,queen, and King - all worth 10 points.     
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-          this.cardValue =10;
-          break;
-      case 10:
-          this.cardValue = 11;
-          break;
-      
-      case 11:
-           this.cardValue = 2;
-           break;
-           
-      case 12:
-          this.cardValue =3;
-          break;
-          
-  }
-  
+for(int i=0;i<Dir.length();i++)
+{
+ if(Character.isDigit(Dir.charAt(i))){
+     index= i;
+     break;
+ }
 }
+  
+String dig = Dir.substring(index,index+3);
+
+int val = Integer.parseInt(dig);
+
+if(val >=140)
+{
+    this.suit = Suit.Spades;
+}
+else if(val >=127){
+    this.suit = Suit.Hearts;
+}
+else if(val >=114){
+    this.suit = Suit.Clubs;
+}
+else{ 
+    this.suit = Suit.Diamonds;
+}
+
+
+  // Mod 13 it
+   val = (val-100)%13;
+   
+   if(val >=10){
+       this.cardValue = 10;
+   }
+   else if(val ==1){
+       this.cardValue=11;
+   }
+   else{
+       this.cardValue= val;
+   }
+}
+
+  
   public int getValue()
   {
       return this.cardValue;
